@@ -28,11 +28,64 @@ namespace WpfPresentationLayer
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddingButton_Click(object sender, RoutedEventArgs e)
         {
-            RunningRepository rp = new RunningRepository(new TrainingContext());
-            TrainingManager m = new TrainingManager(new UnitOfWork(new TrainingContext("Production")));
-            m.AddCyclingTraining(DateTime.Now, 25, new TimeSpan(25), 10, 20, TrainingType.Endurance, "none", BikeType.CityBike);
+            if ((bool)RadioAddCycling.IsChecked)
+            {
+                Window cyclingWindow = new AddCyclingSessionWindow();
+                cyclingWindow.Show();
+            }
+            else
+            {
+                Window RunningWindow = new RunningWindow();
+                RunningWindow.Show();
+            }
+        }
+
+        private void OverviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool cycling = (bool)CyclingOverviewCheckbox.IsChecked;
+            bool running = (bool)RunninggOverviewCheckbox.IsChecked;
+            if (cycling&&running)
+            {
+
+            }
+            else if (running)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        private void ShowButton_Click(object sender, RoutedEventArgs e)
+        {
+            int amount = 0;
+            bool isNumber = int.TryParse(AmountToShow.Text,out amount);
+            if (isNumber)
+            {
+                SessionType  sT;
+                if ((bool)RadioShowCycling.IsChecked)
+                {
+                    sT = SessionType.Cycling;
+                }
+                else
+                {
+                    sT = SessionType.Running;
+                }
+                Window showLatestWindow = new ShowLatestWindow(amount,sT);
+                showLatestWindow.Show();
+                //not sure if i should keep this
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("The amount given needs to be a number! ", "Invalid Entry", MessageBoxButton.OK, MessageBoxImage.Warning);
+                AmountToShow.Focus();
+                AmountToShow.SelectAll();
+            }
         }
     }
 }

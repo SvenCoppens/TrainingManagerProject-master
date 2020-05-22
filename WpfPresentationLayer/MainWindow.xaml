@@ -28,17 +28,25 @@
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
-        <Label HorizontalAlignment="Right" VerticalAlignment="Center">Date:</Label>
-        <DatePicker x:Name="datePicker" VerticalAlignment="Center" Grid.Column="1" FirstDayOfWeek="Monday" SelectedDateFormat="Long"/>
 
-        <Label Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center">Start Time:</Label>
-        <StackPanel Grid.Column="4" Orientation="Horizontal">
-            <Label VerticalAlignment="Center">HH:</Label>
-            <TextBox Height="20" Width="20" Name="hours" />
-            <Label VerticalAlignment="Center">mm:</Label>
-            <TextBox Height="20" Width="20" Name="minutes" />
-        </StackPanel>
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Add a new Training:</TextBlock>
+        <RadioButton Name="RadioAddCycling" GroupName="addingRadioButtons" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="True" >Cycling</RadioButton>
+        <RadioButton Name="RadioAddRunning" GroupName="addingRadioButtons" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">Running</RadioButton>
+        <Button Name="AddingButton" Grid.Row="1" Click="AddingButton_Click">Add</Button>
 
-        <Button Grid.Column="5" Grid.Row="9" Click="Button_Click">Add</Button>
+
+        <TextBlock Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">Overviews:</TextBlock>
+        <CheckBox Name="CyclingOverviewCheckbox" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">Cycling</CheckBox>
+        <CheckBox Name="RunninggOverviewCheckbox" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">Running</CheckBox>
+        <Button Name="OverviewButton" Grid.Row="4" Click="OverviewButton_Click">Generate Overview</Button>
+
+        <TextBlock Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center">Show Latest Trainings:</TextBlock>
+        <RadioButton Name="RadioShowCycling" GroupName="showLatestRadioButtons" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="True" >Cycling</RadioButton>
+        <RadioButton Name="RadioShowRunning" GroupName="showLatestRadioButtons" Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">Running</RadioButton>
+        <DockPanel Grid.Row="7" Grid.Column="1">
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center">Amount:</Label>
+            <TextBox Name="AmountToShow" VerticalAlignment="Center"/>
+        </DockPanel>
+        <Button Name="ShowButton" Grid.Row="7" Click="ShowButton_Click">Show</Button>
     </Grid>
 </Window>
