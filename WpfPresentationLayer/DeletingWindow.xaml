@@ -1,0 +1,43 @@
+﻿<Window x:Class="WpfPresentationLayer.DeletingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfPresentationLayer"
+        mc:Ignorable="d"
+        Title="DeletingWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" >Cycling Ids</Label>
+        <Label VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" >Running Ids</Label>
+        <ListView Name="cyclingIdsListView" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2"></ListView>
+        <ListView Name="runningIdsListView" Grid.Row="1" Grid.RowSpan="3" Grid.Column="4"></ListView>
+
+        <TextBox Name="newCyclingIdTextBox" VerticalAlignment="Center" Grid.Row="2" HorizontalContentAlignment="Right"></TextBox>
+        <TextBox Name="newRunningIdTextBox" VerticalAlignment="Center" Grid.Column="6" Grid.Row="2" HorizontalContentAlignment="Left"></TextBox>
+
+        <Button Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Click="AddCyclingIdButtonClick">Add Cycling Id</Button>
+        <Button Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" Click="AddRunningIdButtonClick">Add Running Id</Button>
+
+        <Button Grid.Row="3" Grid.Column="5" VerticalAlignment="Center" Click="RemoveRunningIdsFromListButton">Undo selected Ids</Button>
+        <Button Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Click="RemoveCyclingIdsFromListButton">Undo selected Ids</Button>
+
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="3" Click="DeleteGivenIds">Delete given ids</Button>
+        
+    </Grid>
+</Window>

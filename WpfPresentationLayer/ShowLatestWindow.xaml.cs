@@ -19,27 +19,51 @@ namespace WpfPresentationLayer
     /// </summary>
     public partial class ShowLatestWindow : Window
     {
-        public ShowLatestWindow(int amount,SessionType sessionType)
+        private int _amountToShow;
+        private SessionType _sessionType;
+        private string _databaseString;
+        public ShowLatestWindow(string databaseString,int amount,SessionType sessionType)
         {
             InitializeComponent();
-            ShowResults(amount,sessionType);
+            _databaseString = databaseString;
+            _amountToShow = amount;
+            _sessionType = sessionType;
+            ShowResults(_amountToShow,_sessionType);
+            
         }
         public void ShowResults(int amount, SessionType sessionType)
         {
-            TrainingManager m = new TrainingManager(new UnitOfWork(new TrainingContext("Production")));
+            TrainingManager _tM = new TrainingManager(new UnitOfWork(new TrainingContext(_databaseString)));
             if (sessionType == SessionType.Cycling)
             {
-                dataGridShowResults.ItemsSource = m.GetPreviousCyclingSessions(amount);
+                dataGridShowResults.ItemsSource = _tM.GetPreviousCyclingSessions(amount);
             }
             else
             {
-                dataGridShowResults.ItemsSource = m.GetPreviousRunningSessions(amount);
+                dataGridShowResults.ItemsSource = _tM.GetPreviousRunningSessions(amount);
             }
         }
-        private void Window_Closing(object sender,System.ComponentModel.CancelEventArgs e)
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            Window mainWindow = new MainWindow();
-            mainWindow.Show();
+            TrainingManager _tM = new TrainingManager(new UnitOfWork(new TrainingContext(_databaseString)));
+            var selectedItems = dataGridShowResults.SelectedItems;
+            List<int> cyclingIds = new List<int>();
+            List<int> runningIds = new List<int>();
+            for (int i = 0; i < selectedItems.Count; i++)
+            {
+                if(_sessionType == SessionType.Cycling)
+                {
+                    cyclingIds.Add((selectedItems[i] as CyclingSession).Id);
+                }
+                else
+                {
+                    runningIds.Add((selectedItems[i] as RunningSession).Id);
+                }
+            }
+
+            _tM.RemoveTrainings(cyclingIds, runningIds);
+            ShowResults(_amountToShow, _sessionType);
         }
     }
 }

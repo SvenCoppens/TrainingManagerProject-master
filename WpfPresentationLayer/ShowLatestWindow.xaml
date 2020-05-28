@@ -5,9 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfPresentationLayer"
         mc:Ignorable="d"
-        Title="ShowLatestWindow" Height="450" Width="800">
+        Title="ShowLatestWindow" Height="450" Width="900">
     <Grid Margin="10">
-        <DataGrid Name="dataGridShowResults"></DataGrid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.ColumnSpan="4" Grid.RowSpan="5" Name="dataGridShowResults"></DataGrid>
+        <Button Grid.Column="4" Grid.Row="1" Margin="10" Click="DeleteButton_Click">Delete Selection</Button>
         
     </Grid>
 </Window>

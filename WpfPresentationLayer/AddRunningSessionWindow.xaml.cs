@@ -2,7 +2,6 @@
 using DomainLibrary.Domain;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,39 +15,37 @@ using System.Windows.Shapes;
 namespace WpfPresentationLayer
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for AddRunningSessionWindow.xaml
     /// </summary>
-    public partial class AddCyclingSessionWindow : Window
+    public partial class AddRunningSessionWindow : Window
     {
         string _databaseString;
-        public AddCyclingSessionWindow(string databaseString)
+        public AddRunningSessionWindow(string databaseString)
         {
             InitializeComponent();
             _databaseString = databaseString;
             var trainingTypeValues = Enum.GetValues(typeof(TrainingType));
-            var bikeTypeValues = Enum.GetValues(typeof(BikeType));
             trainingsTypeList.ItemsSource = trainingTypeValues;
-            bikeTypeList.ItemsSource = bikeTypeValues;
-
 
             int[] hourNumbers = new int[24];
             for (int i = 0; i < 24; i++)
                 hourNumbers[i] = i;
             startHoursSelection.ItemsSource = hourNumbers;
             durationHoursTextBox.ItemsSource = hourNumbers;
+            
 
             int[] minuteNumbers = new int[60];
-            for (int i = 0; i < 60; i++)
+            for (int i = 0; i <60; i++)
                 minuteNumbers[i] = i;
             startMinutesSelection.ItemsSource = minuteNumbers;
             durationMinutesTextBox.ItemsSource = minuteNumbers;
 
-            setInitialValues();
+
+            SetInitialValues();
         }
-        private void setInitialValues()
+        public void SetInitialValues()
         {
             trainingsTypeList.SelectedIndex = 0;
-            bikeTypeList.SelectedIndex = 0;
             startHoursSelection.SelectedIndex = 0;
             durationHoursTextBox.SelectedIndex = 0;
             startMinutesSelection.SelectedIndex = 0;
@@ -56,9 +53,7 @@ namespace WpfPresentationLayer
             trainingDatePicker.SelectedDate = DateTime.Today;
             kmPerHoursTextBox.Text = "";
             distanceTextBox.Text = "";
-            wattTextBox.Text = "";
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -92,15 +87,10 @@ namespace WpfPresentationLayer
                 if (kmPerHoursTextBox.Text != "")
                     averageSpeed = float.Parse(kmPerHoursTextBox.Text);
 
-                int? watt = null;
-                if (wattTextBox.Text != "")
-                    watt = int.Parse(wattTextBox.Text);
-
-                BikeType bikeType = (BikeType)bikeTypeList.SelectedItem;
-
                 TrainingManager m = new TrainingManager(new UnitOfWork(new TrainingContext(_databaseString)));
-                m.AddCyclingTraining(startTime, distance, duration, averageSpeed,watt, trainingType, comment,bikeType);
-                setInitialValues();
+                m.AddRunningTraining(startTime, distance, duration, averageSpeed, trainingType, comment);
+                SetInitialValues();
+
             }
             catch (Exception ex)
             {
