@@ -15,6 +15,7 @@ namespace DomainLibrary.Domain.Tests
         [TestMethod()]
         public void TestMonthlyRunningReport()
         {
+            //Arrange
             TrainingManager addingManager = new TrainingManager(new UnitOfWork(new TrainingContextTest()));
             DateTime fastestRunTime = new DateTime(2010, 4, 12);
             DateTime ignoredSessionTime = new DateTime(2000, 2, 5);
@@ -47,12 +48,13 @@ namespace DomainLibrary.Domain.Tests
             addingManager.AddRunningTraining(laterRun.When, laterRun.Distance, laterRun.Time, laterRun.AverageSpeed, laterRun.TrainingType, laterRun.Comments);
             addingManager.AddRunningTraining(earlyRun.When, earlyRun.Distance, earlyRun.Time, earlyRun.AverageSpeed, earlyRun.TrainingType, earlyRun.Comments);
 
-
+            //Act
             TrainingManager reportManager = new TrainingManager(new UnitOfWork(new TrainingContextTest(true)));
             int reportYear = 2010;
             int reportMonth = 5;
             Report report = reportManager.GenerateMonthlyRunningReport(reportYear, reportMonth);
 
+            //Assert
             Assert.AreEqual(report.StartDate, new DateTime(reportYear, reportMonth, 1), "StartDate dit not match up");
             Assert.AreEqual(report.EndDate, new DateTime(reportYear, reportMonth, DateTime.DaysInMonth(reportYear, reportMonth)), "EndDate did not match up");
 
@@ -76,6 +78,7 @@ namespace DomainLibrary.Domain.Tests
         [TestMethod()]
         public void TestMonthlyTotalReport()
         {
+            //Arrange
             TrainingManager addingManager = new TrainingManager(new UnitOfWork(new TrainingContextTest()));
             DateTime fastestRideTime = new DateTime(2010, 4, 12);
             DateTime ignoredRideTime = new DateTime(2000, 2, 5);
@@ -143,12 +146,13 @@ namespace DomainLibrary.Domain.Tests
             addingManager.AddRunningTraining(earlyRun.When, earlyRun.Distance, earlyRun.Time, earlyRun.AverageSpeed, earlyRun.TrainingType, earlyRun.Comments);
 
 
-
+            //Act
             TrainingManager reportManager = new TrainingManager(new UnitOfWork(new TrainingContextTest(true)));
             int reportYear = 2010;
             int reportMonth = 5;
             Report report = reportManager.GenerateMonthlyTrainingsReport(reportYear, reportMonth);
 
+            //Assert
             Assert.AreEqual(report.StartDate, new DateTime(reportYear, reportMonth, 1),"StartDate dit not match up");
             Assert.AreEqual(report.EndDate, new DateTime(reportYear, reportMonth, DateTime.DaysInMonth(reportYear, reportMonth)),"EndDate did not match up");
 
@@ -191,6 +195,7 @@ namespace DomainLibrary.Domain.Tests
         [TestMethod()]
         public void TestMonthlyCyclingReport()
         {
+            //Arrange
             TrainingManager addingManager = new TrainingManager(new UnitOfWork(new TrainingContextTest()));
             DateTime fastestRideTime = new DateTime(2010, 4, 12);
             DateTime ignoredRideTime = new DateTime(2000, 2, 5);
@@ -225,12 +230,13 @@ namespace DomainLibrary.Domain.Tests
             addingManager.AddCyclingTraining(laterRide.When, laterRide.Distance, laterRide.Time, laterRide.AverageSpeed, laterRide.AverageWatt, laterRide.TrainingType, laterRide.Comments, laterRide.BikeType);
             addingManager.AddCyclingTraining(earlyRide.When, earlyRide.Distance, earlyRide.Time, earlyRide.AverageSpeed, earlyRide.AverageWatt, earlyRide.TrainingType, earlyRide.Comments, earlyRide.BikeType);
 
-
+            //Act
             TrainingManager reportManager = new TrainingManager(new UnitOfWork(new TrainingContextTest(true)));
             int reportYear = 2010;
             int reportMonth = 5;
             Report report = reportManager.GenerateMonthlyCyclingReport(reportYear, reportMonth);
 
+            //Assert
             Assert.AreEqual(report.StartDate, new DateTime(reportYear, reportMonth, 1), "StartDate dit not match up");
             Assert.AreEqual(report.EndDate, new DateTime(reportYear, reportMonth, DateTime.DaysInMonth(reportYear, reportMonth)), "EndDate did not match up");
 

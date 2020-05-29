@@ -14,6 +14,7 @@ namespace DomainLibrary.Domain.Tests
         [TestMethod]
         public void TestCorrectBindings()
         {
+            //Arrange
             DateTime now = DateTime.Now;
             int distance = 2000;
             TimeSpan time = new TimeSpan(2, 3, 4);
@@ -21,8 +22,10 @@ namespace DomainLibrary.Domain.Tests
             TrainingType training = TrainingType.Endurance;
             string comment = "test comment";
 
+            //Act
             RunningSession runningSession = new RunningSession(now, distance, time, speed, training, comment);
 
+            //Assert
             Assert.AreEqual(runningSession.When, now, "StartTime was not bound properly");
             Assert.AreEqual(runningSession.Distance, distance, "Distance was not bound properly");
             Assert.AreEqual(runningSession.Time, time, "Duration was not bound properly");
@@ -33,6 +36,7 @@ namespace DomainLibrary.Domain.Tests
        [TestMethod]
        public void TestNullAcceptance()
         {
+            //Arrange
             DateTime now = DateTime.Now;
             int distance = 2000;
             TimeSpan time = new TimeSpan(2, 3, 4);
@@ -40,8 +44,10 @@ namespace DomainLibrary.Domain.Tests
             TrainingType training = TrainingType.Endurance;
             string comment = null;
 
+            //Act
             RunningSession runningSession = new RunningSession(now, distance, time, speed, training, comment);
 
+            //Assert
             Assert.IsNull(runningSession.Comments, "Comments did not accept null");
             Assert.IsNotNull(runningSession.AverageSpeed,"AverageSpeed was made Null");
             Assert.IsNotNull(runningSession.When, "When was also made null");
@@ -52,6 +58,7 @@ namespace DomainLibrary.Domain.Tests
         [TestMethod]
         public void TestNullAverageSpeed_ShouldBeCalculatedAtCreation()
         {
+            //Arrange
             DateTime now = DateTime.Now;
             int distance = 21000;
             TimeSpan time = new TimeSpan(2, 0, 0);
@@ -59,15 +66,18 @@ namespace DomainLibrary.Domain.Tests
             TrainingType training = TrainingType.Endurance;
             string comment = null;
 
+            //Act
             RunningSession runningSession = new RunningSession(now, distance, time, speed, training, comment);
             float expectation = 10.5f;
 
+            //Assert
             Assert.IsNotNull(runningSession.AverageSpeed, "No attempt at a calculation was made");
             Assert.AreEqual(expectation, runningSession.AverageSpeed,"AverageSpeed was not calculated correctly");
         }
         [TestMethod]
         public void DateTimeShouldNotBeInFuture_ShouldThrowDomainException()
         {
+            //Arrange
             DateTime now = DateTime.Now.AddMinutes(10);
             int distance = 2000;
             TimeSpan time = new TimeSpan(2, 3, 4);
@@ -75,13 +85,16 @@ namespace DomainLibrary.Domain.Tests
             TrainingType training = TrainingType.Endurance;
             string comment = null;
 
+            //Act
             TrainingManager m = new TrainingManager(new UnitOfWork(new TrainingContextTest(true)));
 
+            //Assert
             Assert.ThrowsException<DomainException>(() => m.AddRunningTraining(now,distance,time,speed,training,comment));
         }
         [TestMethod]
         public void DistanceShouldNotBeNegative_ShouldThrowDomainException()
         {
+            //Arrange
             DateTime now = DateTime.Now;
             int distance = -1;
             TimeSpan time = new TimeSpan(2, 3, 4);
@@ -89,13 +102,16 @@ namespace DomainLibrary.Domain.Tests
             TrainingType training = TrainingType.Endurance;
             string comment = null;
 
+            //Act
             TrainingManager m = new TrainingManager(new UnitOfWork(new TrainingContextTest(true)));
 
+            //Assert
             Assert.ThrowsException<DomainException>(() => m.AddRunningTraining(now, distance, time, speed, training, comment));
         }
         [TestMethod]
         public void DistanceShouldNotBeMoreThan50ThousandMeters_ShouldThrowDomainException()
         {
+            //Arrange
             DateTime now = DateTime.Now;
             int distance = 50001;
             TimeSpan time = new TimeSpan(2, 3, 4);
@@ -103,13 +119,16 @@ namespace DomainLibrary.Domain.Tests
             TrainingType training = TrainingType.Endurance;
             string comment = null;
 
+            //Act
             TrainingManager m = new TrainingManager(new UnitOfWork(new TrainingContextTest(true)));
 
+            //Assert
             Assert.ThrowsException<DomainException>(() => m.AddRunningTraining(now, distance, time, speed, training, comment));
         }
         [TestMethod]
         public void DurationShouldNotBeNegative_ShouldThrowDomainException()
         {
+            //Arrange
             DateTime now = DateTime.Now;
             int distance = 10000;
             TimeSpan time = new TimeSpan(-1);
@@ -117,13 +136,16 @@ namespace DomainLibrary.Domain.Tests
             TrainingType training = TrainingType.Endurance;
             string comment = null;
 
+            //Act
             TrainingManager m = new TrainingManager(new UnitOfWork(new TrainingContextTest(true)));
 
+            //Assert
             Assert.ThrowsException<DomainException>(() => m.AddRunningTraining(now, distance, time, speed, training, comment));
         }
         [TestMethod]
         public void DurationShouldNotBeMoreThan20Hours_ShouldThrowDomainException()
         {
+            //Arrange
             DateTime now = DateTime.Now;
             int distance = 10000;
             TimeSpan time = new TimeSpan(20,0,1);
@@ -131,13 +153,16 @@ namespace DomainLibrary.Domain.Tests
             TrainingType training = TrainingType.Endurance;
             string comment = null;
 
+            //Act
             TrainingManager m = new TrainingManager(new UnitOfWork(new TrainingContextTest(true)));
 
+            //Assert
             Assert.ThrowsException<DomainException>(() => m.AddRunningTraining(now, distance, time, speed, training, comment));
         }
         [TestMethod]
         public void AverageSpeedShouldNotBeNegative_ShouldThrowDomainException()
         {
+            //Arrange
             DateTime now = DateTime.Now;
             int distance = 10000;
             TimeSpan time = new TimeSpan(2, 0, 1);
@@ -145,13 +170,16 @@ namespace DomainLibrary.Domain.Tests
             TrainingType training = TrainingType.Endurance;
             string comment = null;
 
+            //Act
             TrainingManager m = new TrainingManager(new UnitOfWork(new TrainingContextTest(true)));
 
+            //Assert
             Assert.ThrowsException<DomainException>(() => m.AddRunningTraining(now, distance, time, speed, training, comment));
         }
         [TestMethod]
         public void AverageSpeedShouldNotBeMoreThan30_ShouldThrowDomainException()
         {
+            //Arrange
             DateTime now = DateTime.Now;
             int distance = 10000;
             TimeSpan time = new TimeSpan(2, 0, 1);
@@ -159,8 +187,10 @@ namespace DomainLibrary.Domain.Tests
             TrainingType training = TrainingType.Endurance;
             string comment = null;
 
+            //Act
             TrainingManager m = new TrainingManager(new UnitOfWork(new TrainingContextTest(true)));
 
+            //Assert
             Assert.ThrowsException<DomainException>(() => m.AddRunningTraining(now, distance, time, speed, training, comment));
         }
 
